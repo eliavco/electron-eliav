@@ -7,8 +7,8 @@ dotenv.config({ path: path.join(__dirname, 'config.env') });
 
 // require('./utils/reload');
 
-app.on('ready', createWindow('index', {
-    name: 'Eliav'
+app.on('ready', createWindow('base/_base', {
+    title: 'Eliav'
 }));
 
 

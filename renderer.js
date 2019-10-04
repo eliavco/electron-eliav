@@ -4,21 +4,26 @@ const fs = require('fs');
 const uniqid = require('uniqid');
 const { BrowserWindow } = require('electron');
 
-exports.createWindow = (template, templateVars) => {
+exports.createWindow = (template, templateVars, settings) => {
     const filePath = path.join(__dirname, 'views', `${template}-${uniqid()}.html`);
     const pugFilePath = path.join(__dirname, 'views', `${template}.pug`);
 
     fs.writeFileSync(filePath, pug.renderFile(pugFilePath, templateVars));
 
     return () => {
-        let win = new BrowserWindow({
-            width: 800,
-            height: 600,
-            icon: path.join(__dirname, 'icons/icon2_298x298.png'),
-            webPreferences: {
-                nodeIntegration: true
-            }
-        });
+        const winSets = settings
+            ? settings
+            : {
+                  icon: path.join(__dirname, 'icons/icon2_298x298.png'),
+                  fullscreen: true,
+                  fullscreenable: false,
+                  autoHideMenuBar: true,
+                  webPreferences: {
+                      nodeIntegration: true
+                  }
+              };
+
+        let win = new BrowserWindow(winSets);
 
         win.loadFile(filePath);
         fs.unlinkSync(filePath);
