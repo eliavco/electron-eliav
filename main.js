@@ -1,17 +1,20 @@
 const path = require('path');
 const dotenv = require('dotenv');
 const { createWindow } = require('./renderer');
-const { app } = require('electron');
+const { app, ipcMain, BrowserWindow } = require('electron');
+// require('electron-middle-sass');
 
 dotenv.config({ path: path.join(__dirname, 'config.env') });
 
 // require('./utils/reload');
 
 app.on('ready', createWindow('base/_base', {
-    title: 'Eliav'
+    title: 'Eliav',
+    photo: 'user-1.jpg',
+    alt: 'Eliav'
+}, {
+    full: true
 }));
-
-
 
 // EVENTS
 app.on('window-all-closed', () => {
@@ -27,5 +30,20 @@ app.on('activate', () => {
     // dock icon is clicked and there are no other windows open.
     if (win === null) {
         createWindow();
+    }
+});
+
+ipcMain.on('intconchange', function(event, status) {
+    const parent = BrowserWindow.fromId(event.frameId);
+    if (!status) {
+        createWindow('offline', {
+            title: 'Offline'
+        },{
+            modal: true,
+            parent
+        })();
+    } else {
+        console.log(parent);
+        // close when online
     }
 });

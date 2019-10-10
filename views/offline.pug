@@ -7,20 +7,8 @@ html(lang='en')
             meta(name='viewport', content='width=device-width, initial-scale=1.0')
             link(href='https://fonts.googleapis.com/css?family=Lato:300,300i,700', rel='stylesheet')
             link(rel='stylesheet', href=`${dir}/styles/style.css`)
-            //- link(rel='shortcut icon', href='./../../img/favicon.png', type='image/png')
-            //- script(src='https://js.stripe.com/v3/')
             title Natours | #{title}
 
-    body()
-        // HEADER
-        include ../layout/_header
-
-        // SECTION
-        block content
-            h1 This is a placeholder
-
-        // FOOTER
-        include ../layout/_footer
-        
-        block bottom
-            script(src=`${dir}/scripts/script.js`)
+    body
+        h1 No Internet Connection
+        script(src=`${dir}/scripts/close-online.js`, type='text/javascript')
